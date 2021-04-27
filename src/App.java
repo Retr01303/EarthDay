@@ -1,51 +1,69 @@
 import java.awt.*;
 import java.awt.event.*;
 
-
 public class App extends Frame implements ActionListener {
     TextField tfkwh;
     TextField tfco2;
+    TextField tfWatt;
     Label labkwh;
     Label labco2;
-    Label risultao;
+    Label risultato;
+    Label LabWatt;
     Button b;
-    int x;
+
+    Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+    int width = (int) size.getWidth();
+    int height = (int) size.getHeight();
+
+
     App() {
         labkwh = new Label();
         labkwh.setBounds(50, 30, 150, 20);
         labkwh.setText("Costo kWh");
-        tfkwh = new TextField();
+        tfkwh = new TextField("0.061");
         tfkwh.setBounds(50, 50, 150, 20);
         labco2 = new Label();
         labco2.setBounds(50, 70, 150, 20);
-        labco2.setText("Co2/kWh");
-        tfco2 = new TextField();
-        tfco2.setBounds(50, 100, 150, 20);
-        risultao = new Label();
-        risultao.setBounds(50, 250, 150, 20);
-        risultao.setText("Costo kWh");
+        labco2.setText("Co2/kWh in Grammi");
+        tfco2 = new TextField("0.36");
+        tfco2.setBounds(50, 90, 150, 20);
+        LabWatt = new Label();
+        LabWatt.setBounds(50, 110, 150, 20);
+        LabWatt.setText("Consumo in Watt");
+        tfWatt = new TextField();
+        tfWatt.setBounds(50, 130, 150, 20);
+        risultato = new Label();
+        risultato.setBounds(50, 250, 300, 20);
+        risultato.setText("Costo kWh");
         b = new Button("Calcola");
         b.setBounds(50, 300, 60, 30);
         b.addActionListener(this);
         add(labkwh);
         add(labco2);
-        add(risultao);
+        add(LabWatt);
+        add(tfWatt);
+        add(risultato);
         add(tfkwh);
         add(tfco2);
         add(b);
-        setSize(400, 400);
+        setSize(width / 2, height / 2);
         setLayout(null);
         setVisible(true);
     }
 
     public void actionPerformed(ActionEvent e) {
         try {
+            risultato.setForeground(Color.black);
             double co2 = Double.parseDouble(tfco2.getText());
             double kwh = Double.parseDouble(tfkwh.getText());
-            Double calcolo = co2 * kwh;
-            risultao.setText(calcolo.toString());
+            double watt = Double.parseDouble(tfWatt.getText());
+            Double calcoloCo2 = (co2 * watt) / 1000;
+            Double calcoloCostoKwh = (kwh * watt) / 1000;
+            risultato.setText(calcoloCo2.toString() + " " + calcoloCostoKwh + "€" );
         } catch (Exception ex) {
             System.out.println(ex);
+            risultato.setForeground(Color.RED);
+            risultato.setText("NaN");
         }
     }
 
