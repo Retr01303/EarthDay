@@ -55,9 +55,11 @@ public class App extends Frame implements ActionListener {
             double co2 = Double.parseDouble(tfco2.getText());
             double kwh = Double.parseDouble(tfkwh.getText());
             double watt = Double.parseDouble(tfWatt.getText());
+            String risultatoFinale;
             Double calcoloCo2 = (co2 * watt) / 1000;
             Double calcoloCostoKwh = (kwh * watt) / 1000;
-            risultato.setText(calcoloCo2.toString() + " " + calcoloCostoKwh + "€" );
+            risultatoFinale = Math.round(calcoloCo2 * 10000.0) / 10000.0+ " " + Math.round(calcoloCostoKwh * 10000.0) / 10000.0 + "€" ;
+            risultato.setText(risultatoFinale);
         } catch (Exception ex) {
             System.out.println(ex);
             risultato.setForeground(Color.RED);
