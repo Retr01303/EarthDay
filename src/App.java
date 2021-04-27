@@ -9,7 +9,7 @@ public class App extends Frame implements ActionListener {
     Label labco2;
     Label risultao;
     Button b;
-
+    int x;
     App() {
         labkwh = new Label();
         labkwh.setBounds(50, 30, 150, 20);
