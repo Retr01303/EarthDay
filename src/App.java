@@ -10,9 +10,11 @@ public class App extends Frame implements ActionListener {
     Label risultato;
     Label LabWatt;
     Button b;
+
     Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
     int width = (int) size.getWidth();
     int height = (int) size.getHeight();
+
 
     App() {
         labkwh = new Label();
