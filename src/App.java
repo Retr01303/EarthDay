@@ -1,16 +1,18 @@
 import java.awt.*;
 import java.awt.event.*;
-
+import java.text.DecimalFormat;
+//TODO: Sistemare l'output, mandare a capo il risultato, inserire le ore di utlizzo e fare i calcoli, fare la relazione
 public class App extends Frame implements ActionListener {
     TextField tfkwh;
     TextField tfco2;
     TextField tfWatt;
     Label labkwh;
     Label labco2;
-    Label risultato;
     Label LabWatt;
+    Label LabinfoRisultatoCo2;
+    Label LabInfoRisultaoKwh;
     Button b;
-
+    public static DecimalFormat df = new DecimalFormat("0.0000");
     Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
     int width = (int) size.getWidth();
     int height = (int) size.getHeight();
@@ -32,9 +34,12 @@ public class App extends Frame implements ActionListener {
         LabWatt.setText("Consumo in Watt");
         tfWatt = new TextField();
         tfWatt.setBounds(50, 130, 150, 20);
-        risultato = new Label();
-        risultato.setBounds(50, 250, 300, 20);
-        risultato.setText("Costo kWh");
+        LabinfoRisultatoCo2 = new Label();
+        LabinfoRisultatoCo2.setBounds(50, 230, 150, 50);
+        LabinfoRisultatoCo2.setText("Co2 Emessi");
+        LabInfoRisultaoKwh = new Label();
+        LabInfoRisultaoKwh.setBounds(200, 230, 150, 50);
+        LabInfoRisultaoKwh.setText("Costo Kwh");
         b = new Button("Calcola");
         b.setBounds(50, 300, 60, 30);
         b.addActionListener(this);
@@ -42,9 +47,10 @@ public class App extends Frame implements ActionListener {
         add(labco2);
         add(LabWatt);
         add(tfWatt);
-        add(risultato);
         add(tfkwh);
         add(tfco2);
+        add(LabinfoRisultatoCo2);
+        add(LabInfoRisultaoKwh);
         add(b);
         setSize(width / 2, height / 2);
         setLayout(null);
@@ -53,19 +59,19 @@ public class App extends Frame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         try {
-            risultato.setForeground(Color.black);
             double co2 = Double.parseDouble(tfco2.getText());
             double kwh = Double.parseDouble(tfkwh.getText());
             double watt = Double.parseDouble(tfWatt.getText());
-            String risultatoFinale;
             Double calcoloCo2 = (co2 * watt) / 1000;
             Double calcoloCostoKwh = (kwh * watt) / 1000;
-            risultatoFinale = Math.round(calcoloCo2 * 10000.0) / 10000.0+ " " + Math.round(calcoloCostoKwh * 10000.0) / 10000.0 + "€" ;
-            risultato.setText(risultatoFinale);
+            String RisultatoCo2 =  df.format(calcoloCo2);
+            String RisultatoKwh =  df.format(calcoloCostoKwh);
+            LabInfoRisultaoKwh.setText("Costo Kwh: "
+            + RisultatoKwh + "€");
+            LabinfoRisultatoCo2.setText("Co2 Emessi: "
+            + RisultatoCo2 + "g");
         } catch (Exception ex) {
             System.out.println(ex);
-            risultato.setForeground(Color.RED);
-            risultato.setText("NaN");
         }
     }
 
